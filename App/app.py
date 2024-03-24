@@ -121,15 +121,28 @@ def logout_action():
 @app.route("/app/<int:pokemon_id>", methods=['GET'])
 @jwt_required()
 def home_page(pokemon_id=1):
-    # update pass relevant data to template
-    return render_template("home.html")
+  # update pass relevant data to template
+  all_pokemon = Pokemon.query.all()
+  my_pokemon = current_user.pokemon
+  selected_pokemon = Pokemon.query.get(pokemon_id)
+  return render_template("home.html", all_pokemon=all_pokemon, selected_pokemon=selected_pokemon, my_pokemon=my_pokemon)
 
 # Action Routes (To Update)
 
 @app.route("/login", methods=['POST'])
 def login_action():
-  # implement login
-  return "Login Action"
+  if request.method == 'POST':
+    username = request.form['username']
+    password = request.form['password']
+    user = User.query.filter_by(username=username).first()
+  if user and user.check_password(password):
+    access_token = create_access_token(identity=user)
+    response = redirect(url_for('home_page'))
+    set_access_cookies(response, access_token)
+    return response
+  else:
+    flash('Login failed. Check username and/or password')
+    return redirect(url_for('login_page'))
 
 @app.route("/pokemon/<int:pokemon_id>", methods=['POST'])
 @jwt_required()
