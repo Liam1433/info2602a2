@@ -148,6 +148,8 @@ def login_action():
 @jwt_required()
 def capture_action(pokemon_id):
   # implement save newly captured pokemon, show a message then reload page
+  name = request.form['pokemon_name']
+  User.catch_pokemon(current_user, pokemon_id, name)
   return redirect(request.referrer)
 
 @app.route("/rename-pokemon/<int:pokemon_id>", methods=['POST'])

@@ -54,7 +54,16 @@
                     <p><b>Weight:</b> {{selected_pokemon.weight}}kg</p>
                     <p><b>Height:</b> {{selected_pokemon.height}}m</p>
                     {% endif %}
+
+                    {% if selected_pokemon %}
+
+                    <form class="row" action="/pokemon/{{ selected_pokemon.id }}" method="POST">
+                        <p><input type="text" name="pokemon_name" id="name" placeholder="New name for the pokemon" style="max-width: 200px;" required></p>
+                        <input type="submit" class="white-text btn" value="Capture">
+                    </form>
+                    {% endif %}
                 </span>
+                
             </div>
 
     </div>
@@ -71,7 +80,25 @@
                 </tr>
             </thead>
             <tbody>
-              <!-- show captured pokemon here with controls to rename and release for each pokemon -->
+                <!-- show captured pokemon here with controls to rename and release for each pokemon -->
+                {% for pokemon in my_pokemon %}
+                    <tr class="collection-item">
+                        <form class="row" method="POST">
+                            <td>
+                                {{pokemon.pokemon.name}}
+                            </td>
+                            <td>
+                                {{pokemon.name}}
+                            </td>
+                            <td>
+                                <input type="text" name="rename_name" id="name" style="max-width: 300px;" required>
+                                <input type="submit" class="white-text btn" value="Rename">
+                                <input type="submit" class="white-text btn" value="Release">
+                                <!--for rename and release-->
+                            </td>
+                        </form>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
