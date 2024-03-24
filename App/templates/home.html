@@ -30,9 +30,7 @@
             <li class="collection-item">
                 <form class="row" method="POST">
                     <span class="card-title">
-                        <a id="poke-<id>" class="collection-item {% if pokemon == selected_pokemon %}active white-text{% else %}black-text{% endif %}" href="/app/<id>#poke-<id>">
-                            {{pokemon.name}}
-                        </a>
+                        <a id="poke-{{ pokemon.id }}" class="collection-item {% if pokemon == selected_pokemon %}active white-text{% else %}black-text{% endif %}" href="/app/{{ pokemon.id }}#poke-{{ pokemon.id }}">{{pokemon.name}}</a>
                     </span>
                 </form>
             </li>
@@ -47,15 +45,16 @@
 
             <div id="pokemon-detail">
                 {% if selected_pokemon %}
-                <img class="responsive-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<id>.png">
+                <img class="responsive-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ selected_pokemon.id }}.png">
                 <br>
                 <span class="card-title">
                     <p><b>Name:</b> {{selected_pokemon.name}}</p>
+                    <p><b>Type1:</b> {{selected_pokemon.type1}}</p>
+                    <p><b>Type2:</b> {{selected_pokemon.type2}}</p>
+                    <p><b>Weight:</b> {{selected_pokemon.weight}}kg</p>
+                    <p><b>Height:</b> {{selected_pokemon.height}}m</p>
+                    {% endif %}
                 </span>
-                <p><b>Type:</b> {{selected_pokemon.type1}}/{{selected_pokemon.type2}}</p>
-                <p><b>Weight:</b> {{selected_pokemon.weight}}kg</p>
-                <p><b>Height:</b> {{selected_pokemon.height}}m</p>
-                {% endif %}
             </div>
 
     </div>
